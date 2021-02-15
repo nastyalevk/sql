@@ -71,3 +71,26 @@ WHERE GoodTypes.good_type_id= pg.type AND  good_type_name='entertainment'
 GROUP BY member_id;
 WHERE good_name='potato'
 GROUP BY member_id;
+--21
+SELECT good_name
+FROM Goods, Payments
+WHERE Payments.good = Goods.good_id
+GROUP BY good
+HAVING COUNT(good)>1;
+--22
+SELECT member_name
+FROM FamilyMembers
+WHERE status='mother';
+--23
+SELECT good_name, unit_price
+FROM Payments RIGHT JOIN (SELECT good_id, good_name
+                          FROM GoodTypes, Goods
+                          WHERE  GoodTypes.good_type_id=Goods.type AND                 
+                          good_type_name='delicacies') as deli ON deli.good_id=Payments.good 
+WHERE unit_price=(SELECT MAX(unit_price)
+                  FROM Payments RIGHT JOIN (
+                                SELECT good_id, good_name
+                                FROM GoodTypes, Goods
+                                WHERE  GoodTypes.good_type_id=Goods.type AND good_type_name='delicacies') as deli 
+                                ON deli.good_id=Payments.good);
+ 
