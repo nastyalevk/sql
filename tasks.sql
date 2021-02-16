@@ -100,11 +100,10 @@ SELECT COUNT(T.id) AS count
 FROM Trip AS T
 WHERE town_from='Rostov' AND  town_to='Moscow';
 --29
-SELECT name 
-FROM(SELECT passenger
+SELECT DISTINCT  name 
+FROM (SELECT passenger
 FROM  Trip LEFT JOIN Pass_in_trip ON Trip.id=Pass_in_trip.trip
-WHERE town_to='Moscow' AND plane='TU-134')as r LEFT JOIN Passenger ON r.passenger=Passenger.id
-GROUP BY  name
+WHERE town_to='Moscow' AND plane='TU-134')as r LEFT JOIN Passenger ON r.passenger=Passenger.id 
 --30
 SELECT trip, COUNT(id) AS count
 FROM Pass_in_trip 
