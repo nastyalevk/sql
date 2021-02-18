@@ -136,5 +136,41 @@ FROM Class c JOIN Student_in_class s ON c.id=s.class
 WHERE c.name='10 B';
 --40
 SELECT sj.name AS subjects
-FROM Teacher t JOIN Schedule s ON t.id=s.teacher JOIN Subject as sj ON sj.id = subject
+FROM Teacher t JOIN Schedule s ON t.id=s.teacher 
+               JOIN Subject as sj ON sj.id = subject
 WHERE t.last_name='Romashkin';
+--41
+SELECT start_pair
+FROM Timepair
+WHERE id=4;
+--42
+SELECT TIMEDIFF(MAX(end_pair), MIN(start_pair)) AS time
+FROM Timepair
+WHERE id>=2 AND id<=4;
+--43
+SELECT last_name
+FROM Teacher t JOIN Schedule s ON t.id=s.teacher 
+               JOIN Subject as sj ON sj.id = subject
+Where sj.name='Physical Culture'
+ORDER BY last_name;
+--44
+SELECT MAX(TIMESTAMPDIFF(year, birthday, CURRENT_TIMESTAMP())) AS max_year
+FROM Class AS c JOIN Student_in_class AS st ON c.id=st.class 
+                JOIN Student AS s ON st.student=s.id
+WHERE c.name LIKE '10 %';
+--45
+SELECT classroom 
+FROM Schedule 
+GROUP BY classroom
+HAVING COUNT(classroom)=(SELECT COUNT(classroom) as count
+                         FROM Schedule
+                         GROUP BY classroom
+                         ORDER BY  classroom DESC 
+                         LIMIT 1);
+--46
+SELECT name
+FROM Schedule AS s JOIN Class AS c ON s.class=c.id 
+                   JOIN Teacher AS t ON t.id=s.teacher
+WHERE t.last_name='Krauze'
+GROUP BY name;
+--47
