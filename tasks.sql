@@ -89,12 +89,7 @@ FROM Payments RIGHT JOIN (SELECT good_id, good_name
                           FROM GoodTypes, Goods
                           WHERE  GoodTypes.good_type_id=Goods.type AND                 
                           good_type_name='delicacies') AS deli ON deli.good_id=Payments.good 
-WHERE unit_price=(SELECT MAX(unit_price)
-                  FROM Payments RIGHT JOIN (
-                                SELECT good_id, good_name
-                                FROM GoodTypes, Goods
-                                WHERE  GoodTypes.good_type_id=Goods.type AND good_type_name='delicacies') AS deli 
-                                ON deli.good_id=Payments.good);
+LIMIT 1;
 --28
 SELECT COUNT(T.id) AS count
 FROM Trip AS T
@@ -109,3 +104,37 @@ SELECT trip, COUNT(id) AS count
 FROM Pass_in_trip 
 GROUP BY trip
 ORDER BY count DESC;
+--31
+SELECT *
+FROM FamilyMembers
+WHERE member_name LIKE '% Quincey';
+--32
+SELECT FLOOR(AVG(TIMESTAMPDIFF(year, birthday, CURRENT_TIMESTAMP()))) as age
+FROM FamilyMembers;
+--33
+SELECT AVG(unit_price) as cost
+FROM Goods g JOIN Payments p ON g.good_id=p.good
+WHERE good_name LIKE '% caviar';
+--34
+SELECT COUNT(name)as count 
+FROM Class
+WHERE name LIKE '10 %';
+--36
+SELECT *
+FROM Student
+WHERE address LIKE 'ul. Pushkina%';
+--37
+SELECT MIN(TIMESTAMPDIFF(year, birthday, CURRENT_TIMESTAMP())) AS year
+FROM Student;
+--38
+SELECT COUNT(id) AS count
+FROM Student
+WHERE first_name='Anna' ;
+--39
+SELECT COUNT(student) AS count
+FROM Class c JOIN Student_in_class s ON c.id=s.class
+WHERE c.name='10 B';
+--40
+SELECT sj.name AS subjects
+FROM Teacher t JOIN Schedule s ON t.id=s.teacher JOIN Subject as sj ON sj.id = subject
+WHERE t.last_name='Romashkin';
