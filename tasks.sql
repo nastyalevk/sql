@@ -174,3 +174,19 @@ FROM Schedule AS s JOIN Class AS c ON s.class=c.id
 WHERE t.last_name='Krauze'
 GROUP BY name;
 --47
+SELECT COUNT(Schedule.id) AS count
+FROM Schedule JOIN Teacher ON Teacher.id=Schedule.teacher
+WHERE date='2019-08-30' AND last_name='Krauze';
+--48
+SELECT name, COUNT(s.id) as count
+FROM Class c JOIN Student_in_class s ON c.id=s.class
+GROUP BY c.name 
+ORDER BY count DESC;
+--49
+SELECT (COUNT(s.id)*100/(SELECT COUNT(*) FROM Student_in_class)) AS percent
+FROM Class c JOIN Student_in_class s ON c.id=s.class
+Where c.name='10 A';
+--50
+SELECT FLOOR(COUNT(id)*100/(SELECT COUNT(*) FROM Student)) AS percent
+FROM Student 
+WHERE YEAR(birthday)=2000;
