@@ -190,3 +190,14 @@ Where c.name='10 A';
 SELECT FLOOR(COUNT(id)*100/(SELECT COUNT(*) FROM Student)) AS percent
 FROM Student 
 WHERE YEAR(birthday)=2000;
+--59
+SELECT * 
+FROM Users
+Where phone_number LIKE '+375%';
+--60
+SELECT teacher
+FROM(SELECT DISTINCT teacher, COUNT(DISTINCT  name) as name
+     FROM Class JOIN Schedule ON Schedule.class=Class.id
+     WHERE name LIKE '11%'
+     GROUP BY teacher)as t
+WHERE t.name=2;
